@@ -13,5 +13,7 @@ router.get('/character/name/:name', Controller.getCharacterByName)
 
 router.post('/user/register', Controller.regUser)
 router.post("/user/auth", Controller.authUser)
+router.get("/user/favorite/:user_id", Controller.getUserFavorite)
+router.post("/user/add/favorite", Controller.addUserFavorite)
 
 module.exports = router

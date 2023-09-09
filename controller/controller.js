@@ -161,6 +161,36 @@ class ItemController{
         })
     }
 
+    async getUserFavorite(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const user_id = req.params.user_id
+        con.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
+            if(!err){
+                if(result.length == 0){
+                    res.status(409).send(false)
+                }else{
+                    res.json(result)
+                }
+            }else{
+                res.send('Блять')
+                console.log(err)
+            }
+        })
+    }
+
+    async addUserFavorite(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const {user_id, items_id} = req.body
+        con.query(`UPDATE users SET favorite_items = '${items_id}' WHERE id = '${user_id}'`, (err, result) => {
+            if(!err){
+                res.json(result)
+            }else{
+                res.send('Блять')
+                console.log(err)
+            }
+        })
+    }
+
 }
 
 module.exports = new ItemController()
