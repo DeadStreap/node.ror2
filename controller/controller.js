@@ -170,18 +170,14 @@ class ItemController {
                     res.status(409).send(false)
                 } else {
                     let ItemsId = result[0].favorite_items
-                    ItemsId = ItemsId.split(",")
-                    const UserFavoritesItems = []
-                    ItemsId.forEach(function (item, i) {
-                        con.query(`SELECT * FROM items where id = ${item}`, (err, itemInf) => {
-                            if (!err) {
-                                UserFavoritesItems.push(itemInf)
-                                if(i == ItemsId.length-1){
-                                    res.json(UserFavoritesItems)
-                                };
-                            }
-                        })
-                    });
+                     con.query(`SELECT * FROM items where id in (${ItemsId})`, (err, itemInf) => {
+                        if (!err) {
+                                res.json(itemInf)
+                        }else {
+                            res.send('Блять')
+                            console.log(err)
+                        }
+                    })
                 }
             } else {
                 res.send('Блять')
@@ -189,6 +185,7 @@ class ItemController {
             }
         })
     }
+    
     async getUserFavoriteId(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const user_id = req.params.user_id
