@@ -205,15 +205,27 @@ class ItemController {
 
     async addUserFavorite(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        const { user_id, items_id } = req.body
-        con.query(`UPDATE users SET favorite_items = '${items_id}' WHERE id = '${user_id}'`, (err, result) => {
-            if (!err) {
-                res.json(result)
-            } else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
+        let { user_id, items_id } = req.body
+
+        if(JSON.stringify(items_id) == '[]'){
+            con.query(`UPDATE users SET favorite_items = null WHERE id = ${user_id}`, (err, result) => {
+                if (!err) {
+                    res.json(result)
+                } else {
+                    res.send('Блять')
+                    console.log(err)
+                }
+            })
+        }else{
+            con.query(`UPDATE users SET favorite_items = '${items_id}' WHERE id = ${user_id}`, (err, result) => {
+                if (!err) {
+                    res.json(result)
+                } else {
+                    res.send('Блять')
+                    console.log(err)
+                }
+            })
+        }
     }
 
 }
