@@ -1,23 +1,43 @@
 const con = require('../dbconnect')
 
 class ItemController {
+    
+    
+    // async getItemById(req, res) {
+    //     res.setHeader("Access-Control-Allow-Origin", "*");
+    //     const id = req.params.id
+    //     con.query(`SELECT * FROM items where id = '${id}'`, (err, result) => {
+    //         if (!err) {
+    //             if (result.length == 0) {
+    //                 res.json('Not found')
+    //             } else {
+    //                 res.json(result)
+    //             }
+    //         }
+    //         else {
+    //             res.send('Блять')
+    //             console.log(err)
+    //         }
+    //     })
+    // }
 
-    async getItemById(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        const id = req.params.id
-        con.query(`SELECT * FROM items where id = '${id}'`, (err, result) => {
-            if (!err) {
-                if (result.length == 0) {
-                    res.json('Not found')
-                } else {
-                    res.json(result)
-                }
+    async getItemById(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        const id = req.params.id;
+        const sql = 'SELECT * FROM items WHERE id = ?';
+    
+        try {
+            const rows = await con.query(sql, [id]);
+            if (rows.length === 0) {
+                res.status(404).json('Not found');
+            } else {
+                res.json(rows);
             }
-            else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
+        } catch (error) {
+            res.send('Блять')
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async getItemByRarity(req, res) {
@@ -202,6 +222,7 @@ class ItemController {
             }
         })
     }
+    
 
     async addUserFavorite(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
