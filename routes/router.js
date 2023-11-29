@@ -8,6 +8,11 @@ router.get('/item/id/:id', Controller.getItemById)
 router.get('/item/rarity/:rarity', Controller.getItemByRarity)
 router.get('/item/name/:name', Controller.getItemByName)
 
+router.post('/add/equipment', Controller.createEquipment)
+router.get('/equipments', Controller.getEquipments)
+router.get('/equipment/id/:id', Controller.getEquipmentById)
+router.get('/equipment/name/:name', Controller.getEquipmentByName)
+
 router.get('/characters', Controller.getCharacters)
 router.get('/character/name/:name', Controller.getCharacterByName)
 
