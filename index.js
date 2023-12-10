@@ -17,4 +17,3 @@ app.listen(PORT, (err) => {
         console.log(`Server started on port ${PORT}`)
     }
 })
-mysqlConnection.query("SET SESSION wait_timeout = 604800");
