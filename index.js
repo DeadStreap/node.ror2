@@ -9,6 +9,7 @@ app.use(cors())
 
 app.use(express.json())
 app.use('/api', Router)
+mysqlConnection.query("SET SESSION wait_timeout = 604800");
 
 app.listen(PORT, (err) => {
     if(err){
