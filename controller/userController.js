@@ -49,19 +49,28 @@ class UserController {
 
     async updateAvatar(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        var { url, id } = req.body
+        const { url, id } = req.body
         if(url == 'null'){
-            var url = NULL;
+            con.query(`UPDATE users SET img = NULL WHERE id = '${id}';`, (err, result) => {
+                if (!err) {
+                    res.json(result)
+                }
+                else {
+                    res.send('Блять')
+                    console.log(err)
+                }
+            })
+        }else{
+            con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
+                if (!err) {
+                    res.json(result)
+                }
+                else {
+                    res.send('Блять')
+                    console.log(err)
+                }
+            })
         }
-        con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
     }
 
     async getUserFavoriteAll(req, res) {
