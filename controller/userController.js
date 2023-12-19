@@ -49,7 +49,10 @@ class UserController {
 
     async updateAvatar(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        const { url, id } = req.body
+        var { url, id } = req.body
+        if(url == 'null'){
+            var url = NULL;
+        }
         con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
             if (!err) {
                 if (result.length == 0) {
