@@ -47,6 +47,24 @@ class UserController {
         })
     }
 
+    async updateAvatar(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { url, id } = req.body
+        con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
+            if (!err) {
+                if (result.length == 0) {
+                    res.status(409).json('Not found user with that login')
+                } else {
+                    res.json(result)
+                }
+            }
+            else {
+                res.send('Блять')
+                console.log(err)
+            }
+        })
+    }
+
     async getUserFavoriteAll(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const user_id = req.params.user_id

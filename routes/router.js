@@ -20,6 +20,7 @@ router.get('/characters', charactersController.getCharacters)
 router.get('/character/name/:name', charactersController.getCharacterByName)
 
 router.post('/user/register', userController.regUser)
+router.post('/user/update/avatar', userController.updateAvatar)
 router.post("/user/auth", userController.authUser)
 router.get("/user/favorite/all/:user_id", userController.getUserFavoriteAll)
 router.get("/user/favorite/id/:user_id", userController.getUserFavoriteId)
