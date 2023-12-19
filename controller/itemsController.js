@@ -34,7 +34,7 @@ class ItemController {
                 res.json(rows);
             }
         } catch (error) {
-            res.send('Блять')
+            res.send(err)
             console.error(error);
             res.status(500).send('Server error');
         }
@@ -52,7 +52,7 @@ class ItemController {
                 }
             }
             else {
-                res.send('Блять')
+                res.send(err)
                 console.log(err)
             }
         })
@@ -70,7 +70,7 @@ class ItemController {
                 }
             }
             else {
-                res.send('Блять')
+                res.send(err)
                 console.log(err)
             }
         })
@@ -85,7 +85,7 @@ class ItemController {
                 res.json(result)
             }
             else {
-                res.send('Блять')
+                res.send(err)
                 console.log(err)
             }
         })
@@ -98,7 +98,7 @@ class ItemController {
                 res.json(result)
             }
             else {
-                res.send('Блять')
+                res.send(err)
                 console.log(err)
             }
         })
