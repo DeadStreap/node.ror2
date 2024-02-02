@@ -91,6 +91,21 @@ class ItemController {
         })
     }
 
+    async updateItem(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { oldname, name, description, rarity, category, stack } = req.body
+
+        con.query(`UPDATE items SET name = '${name}', description = '${description}', rarity = '${rarity}', category = '${category}', stack = '${stack}' WHERE items . name = '${oldname}'`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
+
     async getItems(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         con.query(`SELECT * FROM items`, (err, result) => {
