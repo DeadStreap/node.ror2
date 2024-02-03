@@ -1,25 +1,6 @@
 const con = require('../dbconnect')
 
 class ItemController {
-    
-    
-    // async getItemById(req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //     const id = req.params.id
-    //     con.query(`SELECT * FROM items where id = '${id}'`, (err, result) => {
-    //         if (!err) {
-    //             if (result.length == 0) {
-    //                 res.json('Not found')
-    //             } else {
-    //                 res.json(result)
-    //             }
-    //         }
-    //         else {
-    //             res.send('Блять')
-    //             console.log(err)
-    //         }
-    //     })
-    // }
 
     async getItemById(req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
