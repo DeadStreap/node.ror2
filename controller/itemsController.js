@@ -78,9 +78,9 @@ class ItemController {
 
     async createItem(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        const { id, name, about, description, rarity, category, stack, FromDLC, img } = req.body
+        const { name, about, description, rarity, category, stack, FromDLC, img } = req.body
 
-        con.query(`INSERT INTO items (id, name, about, description, rarity, category, stack, FromDLC, img) VALUES ("${id}", "${name}", "${about}", "${description}", "${rarity}","${category}", "${stack}", "${FromDLC}", "${img}")`, [], (err, result) => {
+        con.query(`INSERT INTO items (id, name, about, description, rarity, category, stack, FromDLC, img) VALUES (NULL, "${name}", "${about}", "${description}", "${rarity}","${category}", "${stack}", "${FromDLC}", "${img}")`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
@@ -93,9 +93,9 @@ class ItemController {
 
     async updateItem(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        const { oldname, name, description, rarity, category, stack } = req.body
+        const { id, name, description, rarity, category, stack } = req.body
 
-        con.query(`UPDATE items SET name = '${name}', description = '${description}', rarity = '${rarity}', category = '${category}', stack = '${stack}' WHERE items . name = '${oldname}'`, [], (err, result) => {
+        con.query(`UPDATE items SET name = '${name}', description = '${description}', rarity = '${rarity}', category = '${category}', stack = '${stack}' WHERE items . id = '${id}'`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
