@@ -1,6 +1,7 @@
 const con = require('../dbconnect')
 
 class EquipmentController {
+    
     async createEquipment(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const { name, about, description, rarity, cooldown, img } = req.body
