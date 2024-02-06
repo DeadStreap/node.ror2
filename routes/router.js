@@ -9,7 +9,7 @@ router.post('/add/item', itemsController.createItem)
 router.post('/update/item/:name', itemsController.updateItem)
 router.get('/items', itemsController.getItems)
 router.get('/item/id/:id', itemsController.getItemById)
-router.post('/delete/item/:id', itemsController.deleteItem)
+router.post('/delete/item/', itemsController.deleteItem)
 router.get('/item/rarity/:rarity', itemsController.getItemByRarity)
 router.get('/item/name/:name', itemsController.getItemByName)
 
