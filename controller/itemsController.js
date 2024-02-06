@@ -91,7 +91,7 @@ class ItemController {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const { id } = req.body
 
-        con.query(`DELETE FROM items WHERE 'items'.'id' = '${id}')`, [], (err, result) => {
+        con.query(`DELETE FROM items WHERE items . id = ${id}`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
