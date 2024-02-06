@@ -87,6 +87,21 @@ class ItemController {
         })
     }
 
+    async deleteItem(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { id } = req.body
+
+        con.query(`DELETE FROM items WHERE 'items'.'id' = '${id}')`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
+
     async getItems(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         con.query(`SELECT * FROM items`, (err, result) => {
