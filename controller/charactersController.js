@@ -47,6 +47,21 @@ class CharacterController {
             }
         })
     }
+
+    async updateCharacter(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { id, name, health, healthRegen, damage, speed, armor, about, description, img} = req.body
+
+        con.query(`UPDATE characters SET name = '${name}', description = '${description}', about = '${about}', speed = '${speed}', health = '${health}', health_regen = '${healthRegen}', damage = '${damage}', armor = '${armor}', img = '${img}' WHERE charcters . id = '${id}'`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
 }
 
 module.exports = new CharacterController()

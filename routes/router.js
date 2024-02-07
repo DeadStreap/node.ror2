@@ -14,11 +14,13 @@ router.get('/item/rarity/:rarity', itemsController.getItemByRarity)
 router.get('/item/name/:name', itemsController.getItemByName)
 
 router.post('/add/equipment', equipmentController.createEquipment)
+router.post('/update/equipment', itemsController.updateEquipment)
 router.get('/equipments', equipmentController.getEquipments)
 router.get('/equipment/id/:id', equipmentController.getEquipmentById)
 router.get('/equipment/name/:name', equipmentController.getEquipmentByName)
 
 router.post('/add/character', charactersController.createCharacter)
+router.post('/update/character', itemsController.updateCharacter)
 router.get('/characters', charactersController.getCharacters)
 router.get('/character/name/:name', charactersController.getCharacterByName)
 

@@ -65,6 +65,21 @@ class EquipmentController {
             }
         })
     }
+
+    async updateEquipment(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { id, name, about, description, rarity, cooldown, img } = req.body
+
+        con.query(`UPDATE equipments SET name = '${name}', about = '${about}', description = '${description}', rarity = '${rarity}', cooldown = '${cooldown}', img = '${img}' WHERE equipments . id = '${id}'`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
 }
 
 module.exports = new EquipmentController()
