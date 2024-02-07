@@ -6,7 +6,7 @@ const charactersController = require('../controller/charactersController')
 const userController = require('../controller/userController')
 
 router.post('/add/item', itemsController.createItem)
-router.post('/update/item/:name', itemsController.updateItem)
+router.post('/update/item', itemsController.updateItem)
 router.get('/items', itemsController.getItems)
 router.get('/item/id/:id', itemsController.getItemById)
 router.post('/delete/item/', itemsController.deleteItem)

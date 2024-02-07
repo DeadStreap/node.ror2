@@ -74,9 +74,9 @@ class ItemController {
 
     async updateItem(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
-        const { id, name, description, rarity, category, stack } = req.body
+        const { id, name, description, about, rarity, category, stack, FromDLC, img } = req.body
 
-        con.query(`UPDATE items SET name = '${name}', description = '${description}', rarity = '${rarity}', category = '${category}', stack = '${stack}' WHERE items . id = '${id}'`, [], (err, result) => {
+        con.query(`UPDATE items SET name = '${name}', description = '${description}', about = '${about}', rarity = '${rarity}', category = '${category}', stack = '${stack}', FromDLC = '${FromDLC}', img = '${img}' WHERE items . id = '${id}'`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
