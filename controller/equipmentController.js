@@ -80,6 +80,21 @@ class EquipmentController {
             }
         })
     }
+
+    async deleteEquipment(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { id } = req.body
+
+        con.query(`DELETE FROM equipments WHERE equipments . id = ${id}`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
 }
 
 module.exports = new EquipmentController()
