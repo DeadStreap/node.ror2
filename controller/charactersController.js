@@ -52,7 +52,7 @@ class CharacterController {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const { id, name, health, healthRegen, damage, speed, armor, about, description, img} = req.body
 
-        con.query(`UPDATE characters SET name = '${name}', description = '${description}', about = '${about}', speed = '${speed}', health = '${health}', health_regen = '${healthRegen}', damage = '${damage}', armor = '${armor}', img = '${img}' WHERE charcters . id = '${id}'`, [], (err, result) => {
+        con.query(`UPDATE characters SET name = '${name}', description = '${description}', about = '${about}', speed = '${speed}', health = '${health}', health_regen = '${healthRegen}', damage = '${damage}', armor = '${armor}', img = '${img}' WHERE characters . id = '${id}'`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
