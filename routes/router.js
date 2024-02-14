@@ -34,5 +34,6 @@ router.get("/user/favorite/all/:user_id", userController.getUserFavoriteAll)
 router.get("/user/favorite/id/:user_id", userController.getUserFavoriteId)
 router.post("/user/add/favorite", userController.addUserFavorite)
 router.get('/users', userController.getUsers)
+router.get('/user/id/:id', userController.getUserById)
 
 module.exports = router

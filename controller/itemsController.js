@@ -2,7 +2,7 @@ const con = require('../dbconnect')
 
 class ItemController {
 
-    async getItemById(req, res, next) {
+    async getItemById(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         const id = req.params.id;
         const sql = 'SELECT * FROM items WHERE id = ?';
