@@ -159,20 +159,15 @@ class UserController {
     async getUserById(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         const id = req.params.id;
-        const sql = 'SELECT * FROM users WHERE id = ?';
-    
-        try {
-            const rows = await con.query(sql, [id]);
-            if (rows.length === 0) {
-                res.status(404).json('Not found');
-            } else {
-                res.json(rows);
+        con.query(`SELECT * FROM users WHERE users . id = ${id}`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
             }
-        } catch (error) {
-            res.send(err)
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
     }
 
 }
