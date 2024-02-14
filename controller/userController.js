@@ -142,6 +142,19 @@ class UserController {
             })
         }
     }
+
+    async getUsers(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        con.query(`SELECT * FROM users`, (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
 }
 
 module.exports = new UserController()
