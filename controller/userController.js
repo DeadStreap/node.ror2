@@ -170,6 +170,21 @@ class UserController {
         })
     }
 
+    async deleteUser(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { id } = req.body
+
+        con.query(`DELETE FROM users WHERE users . id = ${id}`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
+    }
+
 }
 
 module.exports = new UserController()
