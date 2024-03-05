@@ -60,11 +60,26 @@ class UserController {
                 }
             })
     }
+    
 
     async deleteAvatar(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         const { id } = req.body
             con.query(`UPDATE users SET img = NULL WHERE id = '${id}';`, (err, result) => {
+                if (!err) {
+                    res.json(result)
+                }
+                else {
+                    res.send('Блять')
+                    console.log(err)
+                }
+            })
+    }
+
+    async updateAdmin(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const { isAdmin, id } = req.body
+            con.query(`UPDATE users SET admin = '${isAdmin}' WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 }

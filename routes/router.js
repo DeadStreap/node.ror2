@@ -28,6 +28,7 @@ router.get('/character/name/:name', charactersController.getCharacterByName)
 
 router.post('/user/register', userController.regUser)
 router.post('/user/update/avatar', userController.updateAvatar)
+router.post('/user/update/admin', userController.updateAdmin)
 router.post('/user/delete/avatar', userController.deleteAvatar)
 router.post('/user/delete', userController.deleteUser)
 router.post("/user/auth", userController.authUser)
