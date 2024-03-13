@@ -1,4 +1,5 @@
 const con = require('../dbconnect')
+
 class UserController {
     async regUser(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,13 +59,6 @@ class UserController {
                     console.log(err)
                 }
             })
-    }
-
-    async uploadAvatar(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        const fileName = "../uploads/" +req.file.filename;
-        res.json(fileName)
-        console.log("Success upload")
     }
     
 

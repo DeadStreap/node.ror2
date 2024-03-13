@@ -5,17 +5,6 @@ const equipmentController = require('../controller/equipmentController')
 const charactersController = require('../controller/charactersController')
 const userController = require('../controller/userController')
 
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        return cb(null, "./uploads")
-    },
-    filename: function(req, file, cb){
-        return cb(null, `${Date.now()}_${file.originalname}`)
-    }
-})
-const upload = multer({storage})
-
 router.post('/add/item', itemsController.createItem)
 router.post('/update/item', itemsController.updateItem)
 router.post('/delete/item', itemsController.deleteItem)
@@ -38,7 +27,6 @@ router.get('/characters', charactersController.getCharacters)
 router.get('/character/name/:name', charactersController.getCharacterByName)
 
 router.post('/user/register', userController.regUser)
-router.post('/user/upload/avatar', upload.single('file'), userController.uploadAvatar)
 router.post('/user/update/avatar', userController.updateAvatar)
 router.post('/user/update/admin', userController.updateAdmin)
 router.post('/user/delete/avatar', userController.deleteAvatar)
