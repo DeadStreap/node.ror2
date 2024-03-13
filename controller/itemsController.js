@@ -103,7 +103,6 @@ class ItemController {
     }
 
     async getItems(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         con.query(`SELECT * FROM items`, (err, result) => {
             if (!err) {
                 res.json(result)
