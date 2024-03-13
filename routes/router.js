@@ -7,9 +7,9 @@ const userController = require('../controller/userController')
 
 router.post('/add/item', itemsController.createItem)
 router.post('/update/item', itemsController.updateItem)
+router.post('/delete/item', itemsController.deleteItem)
 router.get('/items', itemsController.getItems)
 router.get('/item/id/:id', itemsController.getItemById)
-router.post('/delete/item', itemsController.deleteItem)
 router.get('/item/rarity/:rarity', itemsController.getItemByRarity)
 router.get('/item/name/:name', itemsController.getItemByName)
 
