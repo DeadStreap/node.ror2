@@ -9,6 +9,7 @@ app.use(cors())
 
 app.use(express.json())
 app.use('/api', Router)
+app.use(express.static('public'))
 
 app.listen(PORT, (err) => {
     if(err){

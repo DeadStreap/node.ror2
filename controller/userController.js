@@ -58,6 +58,13 @@ class UserController {
             })
     }
     
+    async uploadAvatar(req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        const fileName = "../uploads/" +req.file.filename;
+        res.json(fileName)
+        console.log("Success upload")
+    }
+    
 
     async deleteAvatar(req, res) {
         const { id } = req.body
