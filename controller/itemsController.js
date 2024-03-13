@@ -22,7 +22,6 @@ class ItemController {
     }
 
     async getItemByRarity(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const rarity = req.params.rarity
         con.query(`SELECT * FROM items where rarity = '${rarity}'`, (err, result) => {
             if (!err) {
@@ -40,7 +39,6 @@ class ItemController {
     }
 
     async getItemByName(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const name = req.params.name
         con.query(`SELECT * FROM items where name = "${name}"`, (err, result) => {
             if (!err) {
@@ -58,7 +56,6 @@ class ItemController {
     }
 
     async createItem(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { name, about, description, rarity, category, stack, FromDLC, img } = req.body
 
         con.query(`INSERT INTO items (id, name, about, description, rarity, category, stack, FromDLC, img) VALUES (NULL, "${name}", "${about}", "${description}", "${rarity}","${category}", "${stack}", "${FromDLC}", "${img}")`, [], (err, result) => {
@@ -73,7 +70,6 @@ class ItemController {
     }
 
     async updateItem(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { id, name, description, about, rarity, category, stack, FromDLC, img } = req.body
 
         con.query(`UPDATE items SET name = '${name}', description = '${description}', about = '${about}', rarity = '${rarity}', category = '${category}', stack = '${stack}', FromDLC = '${FromDLC}', img = '${img}' WHERE items . id = '${id}'`, [], (err, result) => {
@@ -88,7 +84,6 @@ class ItemController {
     }
 
     async deleteItem(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { id } = req.body
 
         con.query(`DELETE FROM items WHERE items . id = ${id}`, [], (err, result) => {

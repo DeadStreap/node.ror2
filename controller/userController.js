@@ -2,7 +2,6 @@ const con = require('../dbconnect')
 
 class UserController {
     async regUser(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { login, password, email } = req.body
         if (login != '' && password != "" && email != "") {
             con.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
@@ -26,7 +25,6 @@ class UserController {
     }
 
     async authUser(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { login, password } = req.body
         con.query(`SELECT * FROM users where login = '${login}'`, (err, result) => {
             if (!err) {
@@ -48,7 +46,6 @@ class UserController {
     }
 
     async updateAvatar(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { url, id } = req.body
             con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
@@ -63,7 +60,6 @@ class UserController {
     
 
     async deleteAvatar(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { id } = req.body
             con.query(`UPDATE users SET img = NULL WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
@@ -77,7 +73,6 @@ class UserController {
     }
 
     async updateAdmin(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { isAdmin, id } = req.body
             con.query(`UPDATE users SET admin = '${isAdmin}' WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
@@ -91,7 +86,6 @@ class UserController {
     }
 
     async getUserFavoriteAll(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const user_id = req.params.user_id
         con.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
             if (!err) {
@@ -116,7 +110,6 @@ class UserController {
     }
 
     async getUserFavoriteId(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const user_id = req.params.user_id
         con.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
             if (!err) {
@@ -134,7 +127,6 @@ class UserController {
 
 
     async addUserFavorite(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         let { user_id, items_id } = req.body
 
         if (JSON.stringify(items_id) == '[]') {
@@ -159,7 +151,6 @@ class UserController {
     }
 
     async getUsers(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         con.query(`SELECT * FROM users`, (err, result) => {
             if (!err) {
                 res.json(result)
@@ -172,7 +163,6 @@ class UserController {
     }
     
     async getUserById(req, res) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
         const id = req.params.id;
         con.query(`SELECT * FROM users WHERE users . id = ${id}`, [], (err, result) => {
             if (!err) {
@@ -186,7 +176,6 @@ class UserController {
     }
 
     async deleteUser(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { id } = req.body
 
         con.query(`DELETE FROM users WHERE users . id = ${id}`, [], (err, result) => {

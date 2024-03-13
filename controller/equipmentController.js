@@ -3,7 +3,6 @@ const con = require('../dbconnect')
 class EquipmentController {
     
     async createEquipment(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { name, about, description, rarity, cooldown, img } = req.body
         con.query(`INSERT INTO equipments (id, name, about, description, rarity, cooldown, img) VALUES (NULL, "${name}", "${about}", "${description}", "${rarity}","${cooldown}", "${img}")`, [], (err, result) => {
             if (!err) {
@@ -17,7 +16,6 @@ class EquipmentController {
     }
 
     async getEquipments(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         con.query(`SELECT * FROM equipments`, (err, result) => {
             if (!err) {
                 res.json(result)
@@ -30,7 +28,6 @@ class EquipmentController {
     }
 
     async getEquipmentById(req, res) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
         const id = req.params.id;
         const sql = 'SELECT * FROM equipments WHERE id = ?';
 
@@ -49,7 +46,6 @@ class EquipmentController {
     }
 
     async getEquipmentByName(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const name = req.params.name
         con.query(`SELECT * FROM equipments where name = "${name}"`, (err, result) => {
             if (!err) {
@@ -67,7 +63,6 @@ class EquipmentController {
     }
 
     async updateEquipment(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
         const { id, name, about, description, rarity, cooldown, img } = req.body
 
         con.query(`UPDATE equipments SET name = '${name}', about = '${about}', description = '${description}', rarity = '${rarity}', cooldown = '${cooldown}', img = '${img}' WHERE equipments . id = '${id}'`, [], (err, result) => {
@@ -82,7 +77,7 @@ class EquipmentController {
     }
 
     async deleteEquipment(req, res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
+
         const { id } = req.body
 
         con.query(`DELETE FROM equipments WHERE equipments . id = ${id}`, [], (err, result) => {
