@@ -1,67 +1,75 @@
 const pool = require('../dbconnect');
-
 class CharacterController {
 
     async getCharacters(req, res) {
-        try {
-            const [result] = await pool.query(`SELECT * FROM characters`);
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+        pool.query(`SELECT * FROM characters`, (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send('Блять')
+                console.log(err)
+            }
+        })
     }
 
     async getCharacterByName(req, res) {
-        try {
-            const name = req.params.name;
-            const [result] = await pool.query(`SELECT * FROM characters where name = ?`, [name]);
-
-            if (result.length === 0) {
-                res.json('Not found');
-            } else {
-                res.json(result);
+        const name = req.params.name
+        pool.query(`SELECT * FROM characters where name = '${name}'`, (err, result) => {
+            if (!err) {
+                if (result.length == 0) {
+                    res.json('Not found')
+                } else {
+                    res.json(result)
+                }
             }
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+            else {
+                res.send('Блять')
+                console.log(err)
+            }
+        })
     }
 
     async createCharacter(req, res) {
-        try {
-            const { name, health, healthRegen, damage, speed, armor, about, description, img } = req.body;
-            const result = await pool.query(`INSERT INTO characters (id, name, health, health_regen, damage, speed, armor, about, description, img) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [name, health, healthRegen, damage, speed, armor, about, description, img]);
+        const { name, health, healthRegen, damage, speed, armor, about, description, img } = req.body
 
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+        pool.query(`INSERT INTO characters (id, name, health, health_regen, damage, speed, armor, about, description, img) VALUES (NULL, "${name}", "${health}", "${healthRegen}", "${damage}","${speed}", "${armor}", "${about}", "${description}", "${img}")`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
     }
 
     async updateCharacter(req, res) {
-        try {
-            const { id, name, health, healthRegen, damage, speed, armor, about, description, img } = req.body;
-            const result = await pool.query(`UPDATE characters SET name = ?, description = ?, about = ?, speed = ?, health = ?, health_regen = ?, damage = ?, armor = ?, img = ? WHERE id = ?`, [name, description, about, speed, health, healthRegen, damage, armor, img, id]);
+        const { id, name, health, healthRegen, damage, speed, armor, about, description, img } = req.body
 
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+        pool.query(`UPDATE characters SET name = '${name}', description = '${description}', about = '${about}', speed = '${speed}', health = '${health}', health_regen = '${healthRegen}', damage = '${damage}', armor = '${armor}', img = '${img}' WHERE characters . id = '${id}'`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
     }
 
     async deleteCharacter(req, res) {
-        try {
-            const { id } = req.body;
-            const result = await pool.query(`DELETE FROM characters WHERE id = ?`, [id]);
+        const { id } = req.body
 
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error');
-        }
+        pool.query(`DELETE FROM characters WHERE characters . id = ${id}`, [], (err, result) => {
+            if (!err) {
+                res.json(result)
+            }
+            else {
+                res.send(err)
+                console.log(err)
+            }
+        })
     }
 }
 
