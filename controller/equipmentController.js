@@ -1,94 +1,84 @@
-const con = require('../dbconnect')
+const pool = require('../dbconnect');
 
 class EquipmentController {
-    
+
     async createEquipment(req, res) {
-        const { name, about, description, rarity, cooldown, img } = req.body
-        con.query(`INSERT INTO equipments (id, name, about, description, rarity, cooldown, img) VALUES (NULL, "${name}", "${about}", "${description}", "${rarity}","${cooldown}", "${img}")`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
+        try {
+            const { name, about, description, rarity, cooldown, img } = req.body;
+            const result = await pool.query(`INSERT INTO equipments (id, name, about, description, rarity, cooldown, img) VALUES (NULL, ?, ?, ?, ?, ?, ?)`, [name, about, description, rarity, cooldown, img]);
+
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async getEquipments(req, res) {
-        con.query(`SELECT * FROM equipments`, (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
+        try {
+            const [result] = await pool.query(`SELECT * FROM equipments`);
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async getEquipmentById(req, res) {
-        const id = req.params.id;
-        const sql = 'SELECT * FROM equipments WHERE id = ?';
-
         try {
-            const rows = await con.query(sql, [id]);
+            const id = req.params.id;
+            const sql = 'SELECT * FROM equipments WHERE id = ?';
+            const [rows] = await pool.query(sql, [id]);
+
             if (rows.length === 0) {
                 res.status(404).json('Not found');
             } else {
                 res.json(rows);
             }
         } catch (error) {
-            res.send('Блять')
             console.error(error);
             res.status(500).send('Server error');
         }
     }
 
     async getEquipmentByName(req, res) {
-        const name = req.params.name
-        con.query(`SELECT * FROM equipments where name = "${name}"`, (err, result) => {
-            if (!err) {
-                if (result.length == 0) {
-                    res.json('Not found')
-                } else {
-                    res.json(result)
-                }
+        try {
+            const name = req.params.name;
+            const [result] = await pool.query(`SELECT * FROM equipments where name = ?`, [name]);
+
+            if (result.length === 0) {
+                res.json('Not found');
+            } else {
+                res.json(result);
             }
-            else {
-                res.send('Блять')
-                console.log(err)
-            }
-        })
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async updateEquipment(req, res) {
-        const { id, name, about, description, rarity, cooldown, img } = req.body
+        try {
+            const { id, name, about, description, rarity, cooldown, img } = req.body;
+            const result = await pool.query(`UPDATE equipments SET name = ?, about = ?, description = ?, rarity = ?, cooldown = ?, img = ? WHERE id = ?`, [name, about, description, rarity, cooldown, img, id]);
 
-        con.query(`UPDATE equipments SET name = '${name}', about = '${about}', description = '${description}', rarity = '${rarity}', cooldown = '${cooldown}', img = '${img}' WHERE equipments . id = '${id}'`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async deleteEquipment(req, res) {
+        try {
+            const { id } = req.body;
+            const result = await pool.query(`DELETE FROM equipments WHERE id = ?`, [id]);
 
-        const { id } = req.body
-
-        con.query(`DELETE FROM equipments WHERE equipments . id = ${id}`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 }
 

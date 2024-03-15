@@ -1,112 +1,101 @@
-const con = require('../dbconnect')
+const pool = require('../dbconnect');
 
 class ItemController {
 
+    javascript
     async getItemById(req, res) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        const id = req.params.id;
-        const sql = 'SELECT * FROM items WHERE id = ?';
-    
         try {
-            const rows = await con.query(sql, [id]);
+            const id = req.params.id;
+            const sql = 'SELECT * FROM items WHERE id = ?';
+            const [rows] = await pool.query(sql, [id]);
+
             if (rows.length === 0) {
                 res.status(404).json('Not found');
             } else {
                 res.json(rows);
             }
         } catch (error) {
-            res.send(err)
             console.error(error);
             res.status(500).send('Server error');
         }
     }
 
     async getItemByRarity(req, res) {
-        const rarity = req.params.rarity
-        con.query(`SELECT * FROM items where rarity = '${rarity}'`, (err, result) => {
-            if (!err) {
-                if (result.length == 0) {
-                    res.json('Not found')
-                } else {
-                    res.json(result)
-                }
+        try {
+            const rarity = req.params.rarity;
+            const [result] = await pool.query(`SELECT * FROM items where rarity = '${rarity}'`);
+
+            if (result.length === 0) {
+                res.json('Not found');
+            } else {
+                res.json(result);
             }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async getItemByName(req, res) {
-        const name = req.params.name
-        con.query(`SELECT * FROM items where name = "${name}"`, (err, result) => {
-            if (!err) {
-                if (result.length == 0) {
-                    res.json('Not found')
-                } else {
-                    res.json(result)
-                }
+        try {
+            const name = req.params.name;
+            const [result] = await pool.query(`SELECT * FROM items where name = "${name}"`);
+
+            if (result.length === 0) {
+                res.json('Not found');
+            } else {
+                res.json(result);
             }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async createItem(req, res) {
-        const { name, about, description, rarity, category, stack, FromDLC, img } = req.body
+        try {
+            const { name, about, description, rarity, category, stack, FromDLC, img } = req.body;
+            const [result] = await pool.query(`INSERT INTO items (name, about, description, rarity, category, stack, FromDLC, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [name, about, description, rarity, category, stack, FromDLC, img]);
 
-        con.query(`INSERT INTO items (id, name, about, description, rarity, category, stack, FromDLC, img) VALUES (NULL, "${name}", "${about}", "${description}", "${rarity}","${category}", "${stack}", "${FromDLC}", "${img}")`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async updateItem(req, res) {
-        const { id, name, description, about, rarity, category, stack, FromDLC, img } = req.body
+        try {
+            const { id, name, description, about, rarity, category, stack, FromDLC, img } = req.body;
+            const [result] = await pool.query(`UPDATE items SET name = ?, description = ?, about = ?, rarity = ?, category = ?, stack = ?, FromDLC = ?, img = ? WHERE id = ?`, [name, description, about, rarity, category, stack, FromDLC, img, id]);
 
-        con.query(`UPDATE items SET name = '${name}', description = '${description}', about = '${about}', rarity = '${rarity}', category = '${category}', stack = '${stack}', FromDLC = '${FromDLC}', img = '${img}' WHERE items . id = '${id}'`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async deleteItem(req, res) {
-        const { id } = req.body
+        try {
+            const { id } = req.body;
+            const [result] = await pool.query(`DELETE FROM items WHERE id = ?`, [id]);
 
-        con.query(`DELETE FROM items WHERE items . id = ${id}`, [], (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
     async getItems(req, res) {
-        con.query(`SELECT * FROM items`, (err, result) => {
-            if (!err) {
-                res.json(result)
-            }
-            else {
-                res.send(err)
-                console.log(err)
-            }
-        })
+        try {
+            const [rows, fields] = await pool.query(`SELECT * FROM items`);
+            res.json(rows);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
     }
 
 }

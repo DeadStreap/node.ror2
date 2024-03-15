@@ -1,12 +1,12 @@
-const con = require('../dbconnect')
+const pool = require('../dbconnect');
 
 class UserController {
     async regUser(req, res) {
         const { login, password, email } = req.body
         if (login != '' && password != "" && email != "") {
-            con.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
+            pool.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
                 if (result.length == 0) {
-                    con.query(`INSERT INTO users (login, password, email) VALUES ("${login}", "${password}","${email}")`, [], (err, result) => {
+                    pool.query(`INSERT INTO users (login, password, email) VALUES ("${login}", "${password}","${email}")`, [], (err, result) => {
                         if (!err) {
                             res.send('You have been successfully registered')
                         }
@@ -26,7 +26,7 @@ class UserController {
 
     async authUser(req, res) {
         const { login, password } = req.body
-        con.query(`SELECT * FROM users where login = '${login}'`, (err, result) => {
+        pool.query(`SELECT * FROM users where login = '${login}'`, (err, result) => {
             if (!err) {
                 if (result.length == 0) {
                     res.status(409).json('Not found user with that login')
@@ -47,7 +47,7 @@ class UserController {
 
     async updateAvatar(req, res) {
         const { url, id } = req.body
-            con.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
+            pool.query(`UPDATE users SET img = '${url}' WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 }
@@ -61,7 +61,7 @@ class UserController {
 
     async deleteAvatar(req, res) {
         const { id } = req.body
-            con.query(`UPDATE users SET img = NULL WHERE id = '${id}';`, (err, result) => {
+            pool.query(`UPDATE users SET img = NULL WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 }
@@ -74,7 +74,7 @@ class UserController {
 
     async updateAdmin(req, res) {
         const { isAdmin, id } = req.body
-            con.query(`UPDATE users SET admin = '${isAdmin}' WHERE id = '${id}';`, (err, result) => {
+            pool.query(`UPDATE users SET admin = '${isAdmin}' WHERE id = '${id}';`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 }
@@ -87,13 +87,13 @@ class UserController {
 
     async getUserFavoriteAll(req, res) {
         const user_id = req.params.user_id
-        con.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
+        pool.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
             if (!err) {
                 if (result.length == 0) {
                     res.status(409).send(false)
                 } else {
                     let ItemsId = result[0].favorite_items
-                    con.query(`SELECT * FROM items where id in (${ItemsId})`, (err, itemInf) => {
+                    pool.query(`SELECT * FROM items where id in (${ItemsId})`, (err, itemInf) => {
                         if (!err) {
                             res.json(itemInf)
                         } else {
@@ -111,7 +111,7 @@ class UserController {
 
     async getUserFavoriteId(req, res) {
         const user_id = req.params.user_id
-        con.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
+        pool.query(`SELECT favorite_items FROM users where id = ${user_id}`, (err, result) => {
             if (!err) {
                 if (result.length == 0) {
                     res.status(409).send(false)
@@ -130,7 +130,7 @@ class UserController {
         let { user_id, items_id } = req.body
 
         if (JSON.stringify(items_id) == '[]') {
-            con.query(`UPDATE users SET favorite_items = null WHERE id = ${user_id}`, (err, result) => {
+            pool.query(`UPDATE users SET favorite_items = null WHERE id = ${user_id}`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 } else {
@@ -139,7 +139,7 @@ class UserController {
                 }
             })
         } else {
-            con.query(`UPDATE users SET favorite_items = '${items_id}' WHERE id = ${user_id}`, (err, result) => {
+            pool.query(`UPDATE users SET favorite_items = '${items_id}' WHERE id = ${user_id}`, (err, result) => {
                 if (!err) {
                     res.json(result)
                 } else {
@@ -151,7 +151,7 @@ class UserController {
     }
 
     async getUsers(req, res) {
-        con.query(`SELECT * FROM users`, (err, result) => {
+        pool.query(`SELECT * FROM users`, (err, result) => {
             if (!err) {
                 res.json(result)
             }
@@ -164,7 +164,7 @@ class UserController {
     
     async getUserById(req, res) {
         const id = req.params.id;
-        con.query(`SELECT * FROM users WHERE users . id = ${id}`, [], (err, result) => {
+        pool.query(`SELECT * FROM users WHERE users . id = ${id}`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
@@ -178,7 +178,7 @@ class UserController {
     async deleteUser(req, res) {
         const { id } = req.body
 
-        con.query(`DELETE FROM users WHERE users . id = ${id}`, [], (err, result) => {
+        pool.query(`DELETE FROM users WHERE users . id = ${id}`, [], (err, result) => {
             if (!err) {
                 res.json(result)
             }
