@@ -6,7 +6,7 @@ class UserController {
         if (login != '' && password != "" && email != "") {
             pool.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
                 if (result.length == 0) {
-                    pool.query(`INSERT INTO users (login, password, email) VALUES ("${login}", "${password}","${email}")`, [], (err, result) => {
+                    pool.query(`INSERT INTO users (login, password, email, admin) VALUES ("${login}", "${password}","${email}", false)`, [], (err, result) => {
                         if (!err) {
                             res.send('You have been successfully registered')
                         }
