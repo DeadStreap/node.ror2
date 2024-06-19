@@ -4,8 +4,8 @@ class ItemController {
 
     async getItemById(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*');
-            const id = req.params.id;
-            const sql = 'SELECT * FROM items WHERE id = ?';
+        const id = req.params.id;
+        const sql = 'SELECT * FROM items WHERE id = ?';
 
         try {
             const rows = await pool.query(sql, [id]);
@@ -27,14 +27,14 @@ class ItemController {
             if (!err) {
                 if (result.length == 0) {
                     res.json('Not found')
-            } else {
+                } else {
                     res.json(result)
                 }
             }
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
@@ -44,14 +44,14 @@ class ItemController {
             if (!err) {
                 if (result.length == 0) {
                     res.json('Not found')
-            } else {
+                } else {
                     res.json(result)
                 }
             }
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
@@ -65,7 +65,7 @@ class ItemController {
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
@@ -79,7 +79,7 @@ class ItemController {
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
@@ -93,7 +93,7 @@ class ItemController {
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
@@ -105,7 +105,7 @@ class ItemController {
             else {
                 res.send(err)
                 console.log(err)
-        }
+            }
         })
     }
 
